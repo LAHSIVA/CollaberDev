@@ -1,0 +1,19 @@
+{
+  "name": "collaberdev",
+  "version": "1.0.0",
+  "description": "Collaberating Developers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "backend"
+  ],
+  "author": "Vishal V",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
