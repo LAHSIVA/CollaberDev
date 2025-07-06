@@ -3,23 +3,16 @@ const connectDB=require("./config/database");
 const app = express(); // instance of express
 const User=require("./models/user");
 
-app.post("/signup",async (req, res) => {
-    const userObj={
-        firstName: "Vishal",
-        lastName: "V",
-        emailId: "vishalvenkat2019@gmail.com",
-        password: "Vishal@123",
-        age: 22,
-        gender: "Male"
-    }
+app.use(express.json()); // middleware to parse json
 
+app.post("/signup",async (req, res) => {
     // Creating new Instance of User Module
-    const user=new User(userObj);
+    const user=new User(req.body);
     try{
         await user.save();
     res.send("User Added Successfully ");
     }catch(err){
-        res.sendStatus(400).send("Error saving the user" + err.message);
+        res.status(400).send("Error saving the user" + err.message);
     }
 });
 
