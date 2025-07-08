@@ -45,14 +45,12 @@ app.post("/login",async(req,res)=>{
         if(!user){
             throw new Error("Invalid Credentials");
         }
-        const ispasswordValid=await bcrypt.compare(password,user.password);
+        const ispasswordValid=await user.validatePassword(password);
         if(ispasswordValid){
 
-            // Create a JWT Token
-            const token=await jwt.sign({_id:user._id},"secret@2003",{expiresIn:"1d"});
             
-
-            //Add the token to cookie and send the response back to user
+            const token=await user.getJWT();
+            
             res.cookie("token",token,{
                 expires:new Date(Date.now()+8 *3600000),
             });
@@ -69,23 +67,19 @@ app.post("/login",async(req,res)=>{
 })
 
 app.get("/profile",userAuth,async(req,res)=>{
-    try{
-        
+    try{     
     const user=req.user;
     res.send(user);
     }
     catch(err){
         res.status(400).send("Something Went Wrong" + err.message);
     }
-    
 });
 
 app.post("/sendConnectionRequest",userAuth,async(req,res)=>{
     const user=req.user;
-
     //Sending a connection request
     console.log("Sending a connection request");
-
     res.send(user.firstName + "sent the connection request");
 });
 
